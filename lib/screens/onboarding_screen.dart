@@ -114,6 +114,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ),
       ),
+      bottomSheet:
+          _currentPage == _nbPages - 1 ? _buildBottomSheet() : Text(''),
+    );
+  }
+
+  Widget _buildPageInPageView({
+    @required String imagePath,
+    @required String title,
+    @required String body,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(40.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Image(
+              image: AssetImage(imagePath),
+              height: 200,
+              width: 200,
+            ),
+          ),
+          SizedBox(height: 30.0),
+          Text(title, style: kTitleStyle),
+          SizedBox(height: 15.0),
+          Text(body, style: kSubtitleStyle),
+        ],
+      ),
     );
   }
 
@@ -189,28 +217,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildPageInPageView({
-    @required String imagePath,
-    @required String title,
-    @required String body,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.all(40.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Image(
-              image: AssetImage(imagePath),
-              height: 200,
-              width: 200,
+  Container _buildBottomSheet() {
+    return Container(
+      height: 100,
+      width: double.infinity,
+      color: Colors.white,
+      child: GestureDetector(
+        onTap: () => print('Get started'),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Text(
+              'Get started',
+              style: TextStyle(
+                color: Color(0xFF5B16D0),
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          SizedBox(height: 30.0),
-          Text(title, style: kTitleStyle),
-          SizedBox(height: 15.0),
-          Text(body, style: kSubtitleStyle),
-        ],
+        ),
       ),
     );
   }
