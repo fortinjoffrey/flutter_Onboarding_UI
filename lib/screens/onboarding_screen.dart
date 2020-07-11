@@ -73,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
                 Container(
-                  height: 600,
+                  height: 500,
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
@@ -107,11 +107,84 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: _buildPageIndicator(),
-                )
+                ),
+                _buildPrevNextPageRow(),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Expanded _buildPrevNextPageRow() {
+    final bool isFirstPage = _currentPage == 0;
+    final bool isLastPage = _currentPage == _nbPages - 1;
+
+    return Expanded(
+      child: Align(
+        alignment: FractionalOffset.bottomCenter,
+        child: Row(
+          children: [
+            !isFirstPage ? _buildPrevPageButton() : Text(''),
+            Spacer(),
+            !isLastPage ? _buildNextPageButton() : Text(''),
+          ],
+        ),
+      ),
+    );
+  }
+
+  FlatButton _buildNextPageButton() {
+    return FlatButton(
+      onPressed: () {
+        _pageController.nextPage(
+          duration: Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Next'.toUpperCase(),
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
+          ),
+          SizedBox(width: 10.0),
+          Icon(
+            Icons.arrow_forward,
+            color: Colors.white,
+            size: 22.0,
+          ),
+        ],
+      ),
+    );
+  }
+
+  FlatButton _buildPrevPageButton() {
+    return FlatButton(
+      onPressed: () {
+        _pageController.previousPage(
+          duration: Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 22.0,
+          ),
+          SizedBox(width: 10.0),
+          Text(
+            'Prev'.toUpperCase(),
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
+          ),
+        ],
       ),
     );
   }
@@ -129,8 +202,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Center(
             child: Image(
               image: AssetImage(imagePath),
-              height: 300,
-              width: 300,
+              height: 200,
+              width: 200,
             ),
           ),
           SizedBox(height: 30.0),
