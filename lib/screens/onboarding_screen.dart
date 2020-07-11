@@ -10,7 +10,30 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  final int _nbPages = 3;
+  int _currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
+
+  List<Widget> _buildPageIndicator() {
+    List<Widget> list = [];
+    for (int i = 0; i < _nbPages; i++) {
+      list.add(i == _currentPage ? _indicator(true) : _indicator(false));
+    }
+    return list;
+  }
+
+  Widget _indicator(bool isActive) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      height: 8.0,
+      width: isActive ? 24.0 : 16.0,
+      decoration: BoxDecoration(
+        color: isActive ? Colors.white : Color(0xFF7B51D3),
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +77,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
+                    onPageChanged: (int page) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    },
                     children: [
                       _buildPageInPageView(
                         imagePath: 'assets/images/onboarding0.png',
@@ -76,6 +104,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ],
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _buildPageIndicator(),
+                )
               ],
             ),
           ),
