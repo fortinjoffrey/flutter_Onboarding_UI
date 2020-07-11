@@ -54,62 +54,65 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ],
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: FlatButton(
-                    onPressed: () => print('Skip'),
-                    child: Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: FlatButton(
+                      onPressed: () => print('Skip'),
+                      child: Text(
+                        'Skip',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  height: 500,
-                  child: PageView(
-                    physics: ClampingScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    },
-                    children: [
-                      _buildPageInPageView(
-                        imagePath: 'assets/images/onboarding0.png',
-                        title: 'Connect people\naround the world',
-                        body:
-                            'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                      ),
-                      _buildPageInPageView(
-                        imagePath: 'assets/images/onboarding1.png',
-                        title: 'Live your life\nsmarter with us',
-                        body:
-                            'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                      ),
-                      _buildPageInPageView(
-                        imagePath: 'assets/images/onboarding2.png',
-                        title: 'Get a new experience\nof imagination',
-                        body:
-                            'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                      ),
-                    ],
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    // height: 500,
+                    child: PageView(
+                      physics: ClampingScrollPhysics(),
+                      controller: _pageController,
+                      onPageChanged: (int page) {
+                        setState(() {
+                          _currentPage = page;
+                        });
+                      },
+                      children: [
+                        _buildPageInPageView(
+                          imagePath: 'assets/images/onboarding0.png',
+                          title: 'Connect people\naround the world',
+                          body:
+                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                        ),
+                        _buildPageInPageView(
+                          imagePath: 'assets/images/onboarding1.png',
+                          title: 'Live your life\nsmarter with us',
+                          body:
+                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                        ),
+                        _buildPageInPageView(
+                          imagePath: 'assets/images/onboarding2.png',
+                          title: 'Get a new experience\nof imagination',
+                          body:
+                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buildPageIndicator(),
-                ),
-                _buildPrevNextPageRow(),
-              ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: _buildPageIndicator(),
+                  ),
+                  _buildPrevNextPageRow(),
+                ],
+              ),
             ),
           ),
         ),
@@ -129,17 +132,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Image(
-              image: AssetImage(imagePath),
-              height: 200,
-              width: 200,
+          Flexible(
+            flex: 3,
+            child: Center(
+              child: Image(
+                image: AssetImage(imagePath),
+              ),
             ),
           ),
           SizedBox(height: 30.0),
-          Text(title, style: kTitleStyle),
+          Flexible(flex: 1, child: Text(title, style: kTitleStyle)),
           SizedBox(height: 15.0),
-          Text(body, style: kSubtitleStyle),
+          Flexible(flex: 1, child: Text(body, style: kSubtitleStyle)),
         ],
       ),
     );
